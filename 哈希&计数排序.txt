@@ -1,0 +1,35 @@
+a <- {'0':0, '1':2,'.':56,'4':4,'5':67,'6':3,
+'length':67}
+hash<-{}
+index <- 0
+while(index < a['length'])
+    number = a[index]
+    if hash[number] == undefined //hash[number] 不存在
+        hash[number] = 1
+        else // hash[number]存在
+        hash[number] = hash[number] + 1
+    end
+    index <- index + 1
+end
+index2 <- 0
+max <- findmax(a)
+index2 <- 1
+while index < findmax['length']
+    if findmax[index2] < max
+        max <- findmax[index2]
+    end
+    index2 <- index2 + 1
+end
+nawarr <- {}
+while(index2 < max + 1)
+    count=hash[index2]
+    if count !=undefined
+        countIndex = 0
+        while(countIndex < count)
+            newArr.push(index2)
+            countIndex <- countIndex + 1
+        end
+    end
+    index2 <- index2 + 1
+end
+print newArr
