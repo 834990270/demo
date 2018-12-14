@@ -1,0 +1,27 @@
+var a = {
+    value:0,
+    next:{
+        value:2,
+        next:{
+            value:1,
+            next:under
+        }
+    }
+}
+undefined
+a.value
+0
+a.next.value
+2
+a.next.next.value
+1
+删除一项
+a.next = a.next.next
+a.value
+0
+a.next.value
+1
+a.next.next.value
+报错
+a.next.next
+undefined
