@@ -1,7 +1,10 @@
 *{margin:0;padding: 0;}
 a{text-align: none;}
-kbd{border:1px solid red;width:2em;height:2em;display: inline-block;
-text-transform: uppercase;}
+kbd{border:1px solid red;width:4em;height:4em;display: inline-block;
+text-transform: uppercase;position: relative;line-height: 4em;}
+kbd > button{position: absolute;right:0;bottom:0;
+display: none;}
+kbd:hover > button{display: inline-block;}
 main{text-align: center;}
 #mainxxxx{display:inline-block;}
 #mainxxxx > div:nth-child(2){

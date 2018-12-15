@@ -23,8 +23,12 @@
     var hash = {
         q:'qq.com',w:'weibo.com',e:'ele.me',r:'renren.com',t:'tianya.com',y:'youtube.com',u:'uc.com',i:'iqiyi.com',o:'opera.com',p:undefined,a:'acfun.tv',s:'sohu.com',d:undefined,f:undefined,g:undefined,h:undefined,j:undefined,k:undefined,l:undefined,z:'zhihu.com',x:undefined,c:undefined,v:undefined,b:undefined,n:undefined,t:undefined,m:'www.mcdonalds.com.cn',
     }
-
-
+    //去出localStorage 中的 zzz 对应的hash↓
+    var hashInLocalStorage =JSON.parse(localStorage.getItem('zzz' || 'null'))
+    if(hashInLocalStorage){
+        hash =hashInLocalStorage
+    }
+    //编历keys，生成kbd标签↓
     index = 0
     while(index < keys['length']){//0 1 2
         divxxxx = document.createElement('div')
@@ -36,6 +40,19 @@
         while(index2<row['length']){//0-9 0-8 0-6
             kbdxxxx = document.createElement('kbd')
             kbdxxxx.textContent = row[index2]
+            buttonx = document.createElement('button')
+            buttonx.textContent ='编辑'
+            buttonx.id = row[index2]
+            buttonx.onclick = function(xzkjcnxlkcjlk){
+                //onclick被点击发生变化
+                key = xzkjcnxlkcjlk.target.id//q w e r t
+                //target 意思被用户点击的按钮
+                x = prompt('给我一个网站')// qq.com
+                hash[key] = x //哈希变更
+                localStorage.setItem('zzz',JSON.stringify(hash))
+                console.log(hash)
+            }
+            kbdxxxx.appendChild(buttonx)
             divxxxx.appendChild(kbdxxxx)
             index2 = index2+1
         }
@@ -46,14 +63,14 @@
         //console.log('你按键的所有信息')
         key = (xzkjcnxlkcjlk['key'])
         website = hash[key]
-        //location.href='http://'+website
+        location.href='http://'+website
         //模拟用户在地址栏输入
 
         //另一个代码
-        window.open(http:'+website','_blank')
+        //window.open(http:'+website','_blank')
 
     }
-    
+
     </script>
 </body>
 </html>
