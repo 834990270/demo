@@ -3,7 +3,7 @@ a{text-align: none;}
 kbd{border:1px solid red;width:4em;height:4em;display: inline-block;
 text-transform: uppercase;position: relative;}
 kbd > button{position: absolute;right:0;bottom:0;
-display: none;}
+display: none;border-radius:5px;}
 kbd:hover > button{display: inline-block;}
 main{text-align: center;height: 100vh;
     display: flex;
@@ -30,6 +30,6 @@ body{background:grey url(./wall.jpg) no-repeat center center;background-size:cov
     position: relative}
 .row{margin:20px}   
 .row .key{margin: 0 10px;}
-.key img{width: 16px;height:16px;position: absolute;left:2px;top:8px;}
+.key img{width: 16px;height:16px;position: absolute;left:2px;top:20px;}
 .key .text{position: absolute;
             left:4px;top:2px;}

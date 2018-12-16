@@ -22,8 +22,8 @@
         length:3
     }
     var hash = {
-        q:'qq.com',w:'weibo.com',e:'ele.me',r:'renren.com',t:'tianya.com',y:'youtube.com',
-        u:'uc.com',i:'iqiyi.com',o:'opera.com',p:undefined,a:'acfun.tv',s:'sohu.com',d:undefined,f:undefined,
+        q:'qq.com',w:'weibo.com',e:'ele.me',r:undefined,t:'tianya.com',y:'youtube.com',
+        u:undefined,i:'iqiyi.com',o:'opera.com',p:undefined,a:undefined,s:undefined,d:undefined,f:undefined,
         g:undefined,h:undefined,j:'javascript.ruanyifeng.com',k:undefined,l:undefined,z:'zhihu.com',x:undefined,c:undefined,v:undefined,b:undefined,n:undefined,t:undefined,m:'www.mcdonalds.com.cn',
     }
     //去出localStorage 中的 zzz 对应的hash↓
@@ -51,15 +51,25 @@
             button.textContent ='编辑'
             button.id = row[index2]
             img = document.createElement('img')
-            if(hash)[row[index2]]{
+            
+            if(hash[row[index2]]){
                 img.src = 'http://' + hash[row[index2]] + '/favicon.ico'
+            }else{
+                img.src = 'https://834990270.github.io/demo/58-se.png'
             }
+            img.onerror = function(xxx){
+                xxx.target.src = 'https://834990270.github.io/demo/58-se.png'}
             button.onclick = function(xzkjcnxlkcjlk){
                 //onclick被点击发生变化
-                key = xzkjcnxlkcjlk.target.id//q w e r t
+                button2 = xzkjcnxlkcjlk.target
+                img2 = button2.previousSibling
+                key = button2.id//q w e r t
                 //target 意思被用户点击的按钮
                 x = prompt('给我一个网站')// qq.com
                 hash[key] = x //哈希变更
+                img2.src = img.src = 'http://' + x + '/favicon.ico'
+                img.onerror = function(xxx){
+                xxx.target.src = 'https://834990270.github.io/demo/58-se.png'}
                 localStorage.setItem('zzz',JSON.stringify(hash))
                 console.log(hash)
             }
