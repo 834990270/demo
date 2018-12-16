@@ -1,99 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./style.css" />
     <title>我的导航</title>
-</head>
-<body>
+  </head>
+  <body>
     <header></header>
-    <main>
-
-        <div class="wrapper" id="main"></div>
-    </main>
+    <main><div class="wrapper" id="main"></div></main>
     <footer></footer>
     <script>
-    var keys = {
-        0:['q','w','e','r','t','y','u','i','o','p'],
-        1:['a','s','d','f','g','h','j','k','l'],
-        2:['z','x','c','v','b','n','m'],
-        length:3
-    }
-    var hash = {
-        q:'qq.com',w:'weibo.com',e:'ele.me',r:undefined,t:'tianya.com',y:'youtube.com',
-        u:undefined,i:'iqiyi.com',o:'opera.com',p:undefined,a:undefined,s:undefined,d:undefined,f:undefined,
-        g:undefined,h:undefined,j:'javascript.ruanyifeng.com',k:undefined,l:undefined,z:'zhihu.com',x:undefined,c:undefined,v:undefined,b:undefined,n:undefined,t:undefined,m:'www.mcdonalds.com.cn',
-    }
-    //去出localStorage 中的 zzz 对应的hash↓
-    var hashInLocalStorage =JSON.parse(localStorage.getItem('zzz' || 'null'))
-    if(hashInLocalStorage){
-        hash =hashInLocalStorage
-    }
-    //编历keys，生成kbd标签↓
-    index = 0
-    while(index < keys['length']){//0 1 2
-        div = document.createElement('div')
-        div.className='row'
-        main.appendChild(div)
-        //给一个盒子里面加一个盒子
-        row = keys[index] //第一个数组 第二个数组 第三个数组
-        // console.log{row}
-        index2 = 0
-        while(index2<row['length']){//0-9 0-8 0-6
-            kbd = document.createElement('kbd')
-            span = document.createElement('span')
-            span.textContent = row[index2]
-            span.className = 'text'
-            kbd.className = 'key'
-            button = document.createElement('button')
-            button.textContent ='编辑'
-            button.id = row[index2]
-            img = document.createElement('img')
-            
-            if(hash[row[index2]]){
-                img.src = 'http://' + hash[row[index2]] + '/favicon.ico'
-            }else{
-                img.src = 'https://834990270.github.io/demo/58-se.png'
+        
+        //1.初始化数据
+        var hashA = init()
+        var keys=hashA['keys']
+        var hash=hashA['hash']
+
+        //2.生成键盘
+        generateKeyboard(keys,hash)
+
+        //3.监听用户动作
+        listenToUser(hash)
+
+        //下面是私有函数不要看
+        function tag(tagName) {
+            return document.createElement(tagName);
             }
-            img.onerror = function(xxx){
-                xxx.target.src = 'https://834990270.github.io/demo/58-se.png'}
-            button.onclick = function(xzkjcnxlkcjlk){
-                //onclick被点击发生变化
-                button2 = xzkjcnxlkcjlk.target
-                img2 = button2.previousSibling
-                key = button2.id//q w e r t
-                //target 意思被用户点击的按钮
-                x = prompt('给我一个网站')// qq.com
-                hash[key] = x //哈希变更
-                img2.src = img.src = 'http://' + x + '/favicon.ico'
-                img.onerror = function(xxx){
-                xxx.target.src = 'https://834990270.github.io/demo/58-se.png'}
-                localStorage.setItem('zzz',JSON.stringify(hash))
-                console.log(hash)
-            }
-            kbd.appendChild(span)
-            kbd.appendChild(img)
-            kbd.appendChild(button)
-            div.appendChild(kbd)
-            index2 = index2+1
+        function createSpan(textContent) {
+            var span = tag("span");
+            span.textContent = textContent;
+            span.className = "text";
+            return span;
         }
-        index = index+1
+        function createButton(id) {
+            var button = tag("button");
+            button.textContent = "编辑";
+            button.id = id;
+            button.onclick = function(xzkjcnxlkcjlk) {
+            //onclick被点击发生变化
+            var button2 = xzkjcnxlkcjlk.target;
+            var img2 = button2.previousSibling;
+            var key = button2.id; //q w e r t
+            //target 意思被用户点击的按钮
+            var x = prompt("给我一个网站"); // qq.com
+            hash[key] = x; //哈希变更
+            img2.src = img.src = "http://" + x + "/favicon.ico";
+            img.onerror = function(xxx) {
+                xxx.target.src = "https://834990270.github.io/demo/58-se.png";
+            };
+            localStorage.setItem("zzz", JSON.stringify(hash));
+            console.log(hash);
+            };
+            return button;
+        }
+        function createImage(domain) {
+            var img = tag("img");
+
+            if (domain) {
+                img.src = "http://" + domain + "/favicon.ico";
+            } else {
+                img.src = "https://834990270.github.io/demo/58-se.png";
+            }
+            img.onerror = function(xxx) {
+                xxx.target.src = "https://834990270.github.io/demo/58-se.png";
+            };
+            return img;
+        }
+        function gitFormLocalStorage(name) {
+        return JSON.parse(localStorage.getItem(name) || "null");
+        }
+        // function tag(tagName,attributes){
+        //     ver elment document.createElement(tagName)
+        //     for(var key in attributes){//key为className，id，textContent
+        //         element[key] =attributes[key]
+        //     }
+        //     return elment
+        // }
+        function init(){
+        var keys = {
+        0: ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+        1: ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+        2: ["z", "x", "c", "v", "b", "n", "m"],
+        length: 3
+        };
+        var hash = {
+            q: "qq.com",
+            w: "weibo.com",
+            e: "ele.me",
+            r: undefined,
+            t: "tianya.com",
+            y: "youtube.com",
+            u: undefined,
+            i: "iqiyi.com",
+            o: "opera.com",
+            p: undefined,
+            a: undefined,
+            s: undefined,
+            d: undefined,
+            f: undefined,
+            g: undefined,
+            h: undefined,
+            j: "javascript.ruanyifeng.com",
+            k: undefined,
+            l: undefined,
+            z: "zhihu.com",
+            x: undefined,
+            c: undefined,
+            v: undefined,
+            b: undefined,
+            n: undefined,
+            t: undefined,
+            m: "www.mcdonalds.com.cn"
+        };
+        //去出localStorage 中的 zzz 对应的hash↓
+        var hashInLocalStorage = gitFormLocalStorage("zzz");
+        if (hashInLocalStorage) {
+            hash = hashInLocalStorage;
+        }
+        return {
+            "hash":hash,
+            "keys":keys
+        }
     }
-    document.onkeypress = function (xzkjcnxlkcjlk) {
-        //console.log('我发现你输入了一个字')
-        //console.log('你按键的所有信息')
-        key = (xzkjcnxlkcjlk['key'])
-        website = hash[key]
-        location.href='http://'+website
-        //模拟用户在地址栏输入
+    function generateKeyboard(keys,hash){    for (var index = 0; index < keys["length"]; index = index + 1) {
+        var div = tag("div");
+        div.className = "row";
 
-        //另一个代码
-        //window.open(http:'+website','_blank')
+        main.appendChild(div);
+        //给一个盒子里面加一个盒子
 
+        var row = keys[index]; //第一个数组 第二个数组 第三个数组
+        // console.log{row}
+        for (var index2 = 0; index2 < row["length"]; index2 = index2 + 1) {
+            var span = createSpan(row[index2]);
+
+            var button = createButton(row[index2]);
+
+            var img = createImage(hash[row[index2]]);
+
+            var kbd = tag("kbd");
+            kbd.className = "key";
+
+            kbd.appendChild(span);
+            kbd.appendChild(img);
+            kbd.appendChild(button);
+
+            div.appendChild(kbd);
+        }
     }
+    }
+    function listenToUser(hash){
+            document.onkeypress = function(xzkjcnxlkcjlk) {
+                //console.log('我发现你输入了一个字')
+                //console.log('你按键的所有信息')
+                var key = xzkjcnxlkcjlk["key"];
+                var website = hash[key];
+                location.href = "http://" + website;
+                //模拟用户在地址栏输入
 
+                //另一个代码
+                //window.open(http:'+website','_blank')
+            }
+        }
     </script>
-</body>
+    </body>
 </html>
