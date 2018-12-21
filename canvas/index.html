@@ -4,23 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javaScript" src="./main.js"></script>
+    <script src="./main.js"></script>
     <title>js bin</title>
-
+    <link rel="stylesheet" href="./style.css">
 </head>
-<style>
-#xxx{background:green;display:block;}
-body{margin:0;}
-.actions{position:fixed;bottom: 0;left:0;border-radius:7px;}
-.actions > #brush{display:none;}
-.actions.x > #brush{display:inline-block;}
-.actions.x > #eraser{display:none;}
-</style>
+
 <body>
     <canvas id="xxx" width=300 height=300></canvas>
     <div id=actions class="actions">
-        <button id="eraser">橡皮擦</button>
-        <button id="brush">画笔</button>
+        <button id=eraser>橡皮擦</button>
+        <button id=brush>画笔</button>
     </div>
 </body>
 </html>
