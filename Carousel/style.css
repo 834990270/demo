@@ -1,0 +1,11 @@
+.red{color:red;}
+.images{
+    display:flex;
+  align-items:flex-start;
+    transition:all 0.5s;
+}
+.window{
+    width:300px;
+    overflow:hidden
+}
+  .images>img{vertical-align:top;}
