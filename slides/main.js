@@ -21,8 +21,7 @@ document.addEventListener('visibilitychange',function(e){
     })
     makeCurrent(getImage(n+1))
     n += 1
-},2000)
-}
+},2000)}
 })
 
 
