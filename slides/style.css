@@ -1,8 +1,8 @@
 *{margin:0;padding:0;}
 *{box-sizing: border-box;}
 .window{width:400px;height:300px;margin:20px auto;
-    overflow: hidden;}
-.images{display:flex;transition:all 1s}
+    overflow: hidden;border:1px solid black;}
+.images{display:flex;transition:all 1s;}
 .images>img{
     width:100%;}
-
+#controls{margin-bottom:10px;}
