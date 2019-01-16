@@ -1,14 +1,45 @@
 
 let n
 初始化()
-setInterval(()=>{
+let timer = setInterval(()=>{
     makeLeave(getImage(n))
     .one('transitionend', (e)=>{
         makeEnter($(e.currentTarget).removeClass('leave'))
     })
     makeCurrent(getImage(n+1))
     n += 1
-},3000)
+},2000)
+
+document.addEventListener('visibilitychange',function(e){
+	if(ducument.hidden){
+    window.clearInterval(timer)
+}else{
+  timer = setInterval(()=>{
+    makeLeave(getImage(n))
+    .one('transitionend', (e)=>{
+        makeEnter($(e.currentTarget).removeClass('leave'))
+    })
+    makeCurrent(getImage(n+1))
+    n += 1
+},2000)
+}
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getImage(n){
     return $(`.images > img:nth-child(${x(n)})`)
