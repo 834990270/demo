@@ -22,9 +22,44 @@ var server = http.createServer(function(request, response){
   console.log('方方说：含查询字符串的路径\n' + pathWithQuery)
 
   if(path === '/'){
+	let string = fs.readFileSync('./index.html','utf8')
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write('哈哈哈')
+    response.write(string)
+    response.end()
+  }else if(path==='/main.js'){
+    let string = fs.readFileSync('./main.js','utf8')
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
+    response.write(string)
+    response.end()
+  }else if(path==='/xxx'){
+    response.statusCode = 200
+    response.setHeader=('Content-Type','text/json;charset=utf-8')
+    //CORS跨域
+    response.setHeader=('Access-Control-Allow-Origin','http://frank.com:8001')
+    //允许这个域名CORS他
+    response.write(`
+    <?xml version="1.0" encoding="UTF-8"?>
+    {
+      "note":{
+        "to":"小谷"
+        "from":"方方"
+        "heading":"打招呼"
+        "content":"hi"
+      }
+    }
+    `)
+    // response.setHeader=('Content-Type','text/xml')
+    // response.write(`
+    // <?xml version="1.0" encoding="UTF-8"?>
+    // <note>
+    //   <to>Tove</to>
+    //   <from>Jani</from>
+    //   <heading>Reminder</heading>
+    //   <body>Don't forget me this weekend!</body>
+    //   </note>
+    // `)
     response.end()
   }else{
     response.statusCode = 404
@@ -38,3 +73,4 @@ var server = http.createServer(function(request, response){
 
 server.listen(port)
 console.log('监听 ' + port + ' 成功\n请用在空中转体720度然后用电饭煲打开 http://localhost:' + port)
+
