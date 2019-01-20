@@ -5,20 +5,15 @@ window.jQuery =function(nodeOrSelector){
     nodes.html = function(){}
     return nodes
 }
-window.jQuery.ajax = function(url,method,body,successFn,failFn){
-    let url
-    if(arguments.length === 1){        
-        url = options.url
-
-    }else if(arguments.length === 2){
-        url = arguments[0]
-        options =aruments[1]
-    }
-    let method = options.method
-    let body = options.body
-    let successFn = options.successFn
-    let failFn = options.failFn
-    let headers= options.headers
+window.jQuery.ajax = function({url,method,body,successFn,failFn,headers}){
+    // let url = options.url
+    // let method = options.method
+    // let body = options.body
+    // let successFn = options.successFn
+    // let failFn = options.failFn
+    // let headers= options.headers
+    // //ES6 析构复制
+    // let {url,method,body,successFn,failFn,headers} = options
     let request = new XMLHttpRequest()
     request.open(method,url)//配置request
     for(let key in headers){
