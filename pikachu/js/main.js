@@ -77,8 +77,8 @@
  background: white;
  position: absolute;
  border-radius: 50%;
- left: 6px;
- top:-1px;
+ left: 3px;
+ top:1px;
  border: 2px solid #000;
 }
 /*
