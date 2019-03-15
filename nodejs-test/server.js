@@ -22,7 +22,34 @@ var server = http.createServer(function (request, response) {
   console.log('方方说：含查询字符串的路径\n' + pathWithQuery)
 
   if (path === '/') {
+    var users = fs.readFileSync('./db/users','utf8')
+    try{users =JSON.parse(users)
+    }catch{
+      users = []
+    }
     let string = fs.readFileSync('./index.html', 'utf8')
+    let Cookies = request.headers.cookie.split(';')
+    let hash = {}
+    for(i=0 i<Cookies.length;i++){
+      let parts =cookies[i].split('=')
+      let key=parts[0]
+      let value = parts[1]
+      hash[key] = value
+    }
+    let email =hash.sign_in_email
+    var users = fs.readFileSync('./db/users','utf8')
+    users = JSON.parse(users)
+    for(i=0 i<users.length;i++){
+      if(users[i].email === email){
+        foundUser =users[i]
+        break
+      }
+    }
+    if(foundUser){
+      string = string.replace('--password--',foundUser.password)
+    }else{
+      string = string.replace('--password--','不知道')
+    }
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.write(string)
@@ -41,7 +68,7 @@ var server = http.createServer(function (request, response) {
         let parts=string.split('=')
         let key = parts[0]
         let value = parts[1]
-        hash[key] = value
+        hash[key] = decodeURIComponent(value)
     })
       let {email,password,password_confirmation}= hash
       if(email.indexOf('@') === -1){
@@ -55,13 +82,75 @@ var server = http.createServer(function (request, response) {
       }else if(password !== password_confirmation){
         response.write('password not match')
       }else{
+        var users = fs.readFileSync('./db/users','utf8')
+        try{users =JSON.parse(users)
+        }catch{
+          users = []
+        }
+        let inUse = false
+        for(let i=0 i<users.length; i++){
+          let users = users[i]
+          for(users === users[i]){
+            inUse = true
+            break;
+          }
+        }
+        if(inuse){
+          response.statusCode = 400
+          response.write(email in use)
+        }else {
+        users=JSON.parse(users)
+        users.push({email:email,password:password})
+        var usersString = JSON.stringify(users)
+        fs.writeFileSync('./db/users',usersString)
         response.statusCode = 200
+        }
       }
-      
       response.end()
     });
-
-  } else if (path === '/main.js') {
+  }else if(path === '/sign_in' && method === 'GET'){
+    let string = fs.readFileSync('./sign_in.html', 'utf8')
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/html;charset=utf-8')
+    response.write(string)
+    response.end()
+  } else if(path === '/sign_in' && method === 'POST'){
+    readBody(request).then((body)=>{
+      let strings=body.split('&')
+      let hash ={}
+      strings.forEach((string)=>{
+        let parts=string.split('=')
+        let key = parts[0]
+        let value = parts[1]
+        hash[key] = decodeURIComponent(value)
+    })
+    let {email,password,}= hash
+    console.log('email')
+    console.log(email)
+    console.log('password')
+    console.log(password)
+    var users = fs.readFileSync('./db/users','utf8')
+    try{users =JSON.parse(users)
+    }catch{
+      users = []
+    }
+    let fount
+    for(let i=0 i<users.length; i++){
+      if(email === email[i] && password === password[i]){
+        fount = true
+        break
+      }
+      if(fount){
+        //Set-Cookie: <cookie-name>=<cookie-value> 
+        response.setHeader('Set-Cookie',`:sign_in_email=${email};HttpOnly`)
+        response.statusCode = 200
+      }else{
+        response.statusCode = 401
+      }
+    }
+    response.end()
+  })
+  }else if (path === '/main.js') {
     let string = fs.readFileSync('./main.js', 'utf8')
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/javascript;charset=utf-8')

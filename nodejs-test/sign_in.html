@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>注册</title>
+    <title>登陆</title>
     <style>
         * {
             margin: 0;
@@ -49,18 +49,13 @@
                 <span class="error"></span>
             </div>
             <div class="row">
-                <label>确认密码</label>
-                <input type="password" name="password_confirmation">
-                <span class="error"></span>
-            </div>
-            <div class="row">
-                <input type="submit" value="注册">
+                <input type="submit" value="登陆">
             </div>
         </form>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        let $form = $('#signUpForm')
+        let $form = $('#signInForm')
         $form.on('submit',(e)=>{
             
             let=hash{}
@@ -84,25 +79,11 @@
                 .text('请填写密码')
                 return
             }
-            if(hash['password_confirmation']=== ''){
-                $form.find('[name="password_confirmation"]').siblings('.error')
-                .text('请确认密码')
-                return
-            }
-            if(hash['password'] !==hash['password_confirmation']){
-                $form.find('[name="password_confirmation"]').siblings('.error')
-                .text('密码不匹配')
-                return
-            }
-            $.post('/sign_up',hash)
+            $.post('/sign_in',hash)
             .then(()=>{
-                console.log('success')
+                window.location('/')
             },(requrst)=>{
-                let {error} = requrst.responseJSON
-                if(errors.email && errors.email === 'invalid'){
-                    $form.find('[name="email"]').siblings('.error')
-                    .text('邮箱格式错误')
-                }
+                alert('邮箱与密码不匹配')
             })
         })
     </script>
